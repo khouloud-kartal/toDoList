@@ -24,24 +24,10 @@ registerBtn.addEventListener("click",()=>{
 
 
 
-///////////////////////////database login and register with fetch
+/////////////////////Show tasks
 
 
-// let subRegister = document.getElementById('subRegister');
-// let subLogin = document.getElementById('subLogin');
 
-// subRegister.addEventListener("click",(e)=>{
-//     e.preventDefault();
-//     // console.log(e);
-//     fetch("register.php",{
-//         method: "POST",
-//         // body: new FormData(registerForm)
-//         body: JSON.stringify(login)
-//     })
-//     .then(function(response){
-//         return response.text();
-//     })
-//     .then(function(data){
-//         console.log(data);
-//     })
-// })
+
+
+

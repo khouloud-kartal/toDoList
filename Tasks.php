@@ -1,13 +1,15 @@
 <?php
-    session_start();
     class Tasks{
 
-        private $id;
-        public $login;
-        public $title;
-        public $description;
-        public $date;
+        // private $id;
+        // public $login;
+        // public $title;
+        // public $description;
+        // public $date;
         private $conn;
+        var $row;
+        var $req;
+        var $error;
 
         function __construct(){
             
@@ -32,16 +34,56 @@
             }
         }
 
-        function Create($title, $description, $date, $iduser){
+        function Create($title, $iduser){
 
-            $errorDate = "";
+            if(isset($_SESSION)){
 
-            $sql = "SELECT * FROM taches INNER JOIN users ON taches.iduser = users.id";
+                if($title){
+                        date_default_timezone_set("Europe/Paris");
+                        $createDate = date("Y-m-d H:i:s");
 
-            $req = $this->conn->prepare($sql);
-            $req->execute();
+                        $sql = "INSERT INTO `tasks` VALUES ('?', :title, :createDate , :iduser, '0')";
+                        $req = $this->conn->prepare($sql);
+                        $req->execute(array(':title' => $title,
+                                            ':iduser' => $iduser,
+                                            ':createDate' => $createDate
+                                        ));
+ 
+                }else{
+                    $this->error = 'You have to write something!';
+                }
+                
+            }$this->error =" You have to login to add a task";
 
         }
+
+        function Delete($idTask){
+
+
+        }
+
+        function Done($idTask){
+
+
+
+        }
+
+        function unDone($idTask){
+
+
+        }
+
+
+        function getInfos(){
+
+            $sql = "SELECT * FROM tasks ORDER BY id DESC";
+            $this->req = $this->conn->query($sql);
+
+            $this->row = $this->req->rowCount();      
+
+        }
+
+
     }
 
 $newTask = new Tasks();

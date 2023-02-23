@@ -27,7 +27,7 @@
                 <li><a class="active" href="./index.php">Home</a></li>
                 <li><a href="./register.php">Login</a></li>
                 <li><a href="./toDoList.php">To Do</a></li>
-                <li><a href="./disconnect">Disconnect</a></li>
+                <li><a href="./disconnect.php">Disconnect</a></li>
                 <li><a href="./contact.php">Contact</a></li>
             </ul>
         </nav>

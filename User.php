@@ -10,6 +10,7 @@ class User
     public $firstname;
     public $lastname;
     private $conn;
+    var $error;
 
     public function __construct() {
 
@@ -24,7 +25,7 @@ class User
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-            // echo "You are connected to the database <br>";
+            //echo "You are connected to the database <br>";
         }
 
         catch(PDOException $e){
@@ -64,7 +65,7 @@ class User
                                         ':pass' => $hash,
                                         ':email' => $email,));
 
-                    echo '<strong>Success!</strong> Your account is now created and you can login <br>';
+                    $this->error = 'Success! Your account is now created and you can login';
                                         
                     $userData = [
                         'login' => $login,
@@ -74,31 +75,31 @@ class User
 
                     return $userData;
 
-                }else{ $error = 'The passwords do not match <br>'; }
+                }else{ $this->error = 'The passwords do not match'; }
 
             }else{
 
                 if(strlen($login) < 4 || preg_match("[\W]", $login)) {
 
-                    $errorLogin = "Your login must contain at least 4 caracters and no specials caracters <br>";
+                    $this->error = "Your login must contain at least 4 caracters and no specials caracters";
 
                 }
 
                 if(strlen($password) < 5) {
 
-                    $errorPassword = "Your password must contain at least 5 caracters <br>";
+                    $this->error = "Your password must contain at least 5 caracters";
 
                 }
 
                 if(!preg_match("/@/", $email) || !preg_match("/\./", $email)) {
 
-                    $errorEmail = "Your email is not valid. It must contain '@' and '.' <br>";
+                    $this->error = "Your email is not valid. It must contain '@' and '.'";
 
                 }
 
             }
             
-        }else{ $error = '<strong>Error!</strong> The login already exist. Please choose another one <br>'; }
+        }else{ $this->error = 'Error! The login already exist. Please choose another one '; }
 
         return $error . $errorLogin . $errorPassword . $errorEmail ;
 
@@ -127,13 +128,13 @@ class User
 
                 header('Location: index.php');
 
-                echo '<strong>Success!</strong> You\'re connected<br>';
+                // echo '<strong>Success!</strong> You\'re connected<br>';
 
             }else{   
-                echo '<strong>Error!</strong> Wrong password<br>';
+                $this->error = 'Error! Wrong password<br>';
             }
         }else{    
-            echo '<strong>Error!</strong> The login do not exist.';
+            $this->error = 'Error! The login do not exist.';
         }
 
     }
@@ -141,6 +142,7 @@ class User
     public function Disconnect() {
 
         session_destroy();
+        header('Location: ./register.php');
         exit('Vous avez bien été deconnecté');
 
     }
@@ -161,7 +163,7 @@ class User
 
 
         }else{
-            echo 'Please login to delete your account<br>';
+            $this->error = 'Please login to delete your account<br>';
         }
 
     }
@@ -189,7 +191,7 @@ class User
 
                     if($row!=1){
 
-                        echo '<strong>Error!</strong> The login already exist';
+                        $this->error = 'Error! The login already exist';
 
                     }else{
 
@@ -200,13 +202,13 @@ class User
                         $req->execute(array(':login' => $login, ':sessionId' => $sessionId));
                         
                         $_SESSION['login'] = $login;
-                        echo '<strong>Success!</strong> Your login has been edited<br>';
+                        $this->error = 'Success!Your login has been edited';
 
                     }
 
                 }elseif(strlen($login) < 4 || preg_match("[\W]", $login)) {
 
-                    $errorLogin = "Your login must contain at least 4 caracters and no specials caracters <br>";
+                    $this->error = "Your login must contain at least 4 caracters and no specials caracters";
 
                 }
 
@@ -218,19 +220,19 @@ class User
                     $rs = $this->conn->query($sqlPass);
 
                     $_SESSION['password'] = $hash;
-                    echo '<strong>Success!</strong> Your password has been edited<br>';
+                    $this->error = 'Success! Your password has been edited';
 
                 }elseif(strlen($passwordNew) < 5 and !empty($passwordNew)) {
 
-                    $errorPassword = "Your password must contain at least 5 caracters <br>";
+                    $this->error = "Your password must contain at least 5 caracters";
 
                 }elseif (!empty($passwordNew) && empty($passwordNewConfirm)){
         
-                    $errorPassword = "<strong>Error!</strong> Please confirm password";
+                    $this->error = "Error! Please confirm password";
         
                 }elseif(($passwordNew != $passwordNewConfirm)) {
     
-                    $errorPassword = "<strong>Error!</strong> The passwords are differents";
+                    $this->error = "Error! The passwords are differents";
 
                 }
 
@@ -239,20 +241,20 @@ class User
                     $sqlMail = "UPDATE utilisateurs SET email = '$email' WHERE id = '$sessionId'";
                     $rs = $this->conn->query($sqlMail);
                     $_SESSION['email'] = $email;
-                    echo '<strong>Success!</strong> Your email has been edited<br>';
+                    $this->error = 'Success! Your email has been edited';
 
                 }elseif(!preg_match("/@/", $email) || !preg_match("/\./", $email)) {
 
-                    $errorEmail = "Your email is not valid. It must contain '@' and '.' <br>";
+                    $this->error = "Your email is not valid. It must contain '@' and '.'";
 
                 }
                     
                 
-            }else{ $error = '<strong>Error!</strong> Wrong password <br>'; }
+            }else{ $this->error = 'Error! Wrong password'; }
 
-        }else{ $error = '<strong>Error!</strong> Please login to change your infos <br>'; }
+        }else{ $this->error = 'Error! Please login to change your infos '; }
 
-        return $error . $errorLogin . $errorPassword . $errorEmail ;
+        return $this->error ;
 
     }
 

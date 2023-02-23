@@ -1,8 +1,6 @@
 <?php
     include('header.php');
 
-    var_dump($_POST);
-
     if(isset($_POST['submit-log'])){
         $newUser->connect($_POST['logName'],$_POST['logPass']);
     }
@@ -25,6 +23,9 @@
 
         <form action="register.php" id="login" class="input-group" method="POST">
 
+            <div class="error">
+                <p><?php echo $newUser->error; ?></p>
+            </div>
             <input type="text" class="input-field" placeholder="User Name" name="logName" required>
             <input type="password" class="input-field" placeholder="Password" name="logPass" required>
             <input type="checkbox" class="check-box"><span>Remember Password</span>

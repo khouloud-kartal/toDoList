@@ -9,10 +9,11 @@
 body{
     height: 100%;
     width: 100%;
-    background-image:url(./background.jpg);
+    background-color: rgb(158, 129, 129);
+    /* background-image:url(./background.jpg);
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
 }
 /**********************register and login forms ***************************/
 
@@ -207,8 +208,146 @@ a.active, a:hover{
 }
 
 
+/*********************************To do list **************************/
 
 
+.main-section{
+    background: transparent;
+    max-width: 500px;
+    width: 90%;
+    height: 100%;
+    margin: 30px auto;
+    border-radius: 10px;
+}
 
+.add-section{
+    width: 100%;
+    background: white;
+    margin: 0px auto;
+    padding: 10px;
+    border-radius: 5px;
+}
 
+.add-section input{
+    display: block;
+    width: 95%;
+    height: 40px;
+    margin: 10px auto;
+    border: 2px solid gray;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 0 5px;
+}
 
+.add-section button{
+    display: block;
+    width: 95%;
+    height: 40px;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    background: linear-gradient(to right, rgb(140, 21, 41), pink);
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-section  button:hover{
+    box-shadow: 0 2px 2px 0 rgb(140, 21, 41), 0 2px 3px 0 rgb(140, 21, 41);
+    opacity: 0.7;
+}
+
+.add-section button span{
+    border: 1px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+/* error massages style */
+#errorMes{
+    display: block;
+    background: #f2dede;
+    width: 95%;
+    margin: 0 auto;
+    color: rgb(139, 36, 53);
+    padding: 10px;
+    height: 35px;
+}
+
+.showToDoList{
+    width: 100%;
+    background: white;
+    margin: 30px auto;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.toDoItems{
+    width: 95%;
+    margin: 10px auto;
+    padding: 20px 10px;
+    box-shadow: 0 4px 8px 0 gray, 0 6px 20px 0 gray;
+    border-radius: 5px;
+}
+
+.toDoItems h2{
+    display: inline-block;
+    padding: 5px 0;
+    font-size: 17px;
+    color: rgb(68, 62, 62);
+}
+
+.toDoItems small{
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    color: gray;
+    padding-left: 30px;
+    font-size: 14px;
+}
+
+/* remove a task class */
+
+.remove-to-do{
+    display: block;
+    float: right;
+    width: 20px;
+    height: 20px;
+    color: rgb(138, 36, 36);
+    text-decoration: none;
+    text-align: right;
+    padding: 0 5px 8px 0;
+    border-radius: 50%;
+    transition: background 1s;
+    cursor: pointer;
+}
+
+.remove-to-do:hover{
+    background: rgb(138, 36, 36);
+    color: white;
+}
+
+/* when a task is checked */
+
+.checked{
+    color: gray;
+    text-decoration: line-through;
+}
+
+.toDoItems input{
+    margin: 0 5px;
+}
+
+.empty{
+    font-size: 16px;
+    text-align: center;
+    color: gray;
+}
+
+.error p{
+    color: red;
+    text-align: center;
+    font-size: 16px;
+}
