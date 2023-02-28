@@ -24,9 +24,6 @@ registerBtn.addEventListener("click",()=>{
 
 
 
-/////////////////////Show tasks
-
-
 
 
 
